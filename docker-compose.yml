@@ -15,7 +15,7 @@ services:
       #location of the dockerfile and where shit will be installed 
       context: ./server
     volumes:
-        #dont change this modules just watch them
+        #dont chhange this modules just watch them
       - /app/node_modules
        #any change that is reflected between server and app
       - ./server:/app
