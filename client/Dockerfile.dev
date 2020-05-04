@@ -1,0 +1,10 @@
+FROM node:alpine
+WORKDIR '/app'
+
+COPY ./package.json ./
+# WE DO THE INSTALL IN THE DOCKER FILES
+RUN npm install
+
+COPY . .
+
+CMD ["npm","run","start"]
