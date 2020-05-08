@@ -1,33 +1,36 @@
 sudo: required
+language: generic
+
 services:
   - docker
-#dewvelpoment file to test the application first
+
 before_install:
-  - docker build -t ori/multi-container-react-test -f ./client/Dockerfile.dev ./client #build context
-#runnning the test 
+  - docker build -t stephengrider/react-test -f ./client/Dockerfile.dev ./client
+
 script:
-- docker run -e CI=true ori/multi-container-react-test npm test
+  - docker run stephengrider/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t orirothschild/multi-client ./client #build context
-  - docker build -t orirothschild/multi-nginx ./nginx #builld context
-  - docker build -t orirothschild/multi-server ./server #budild context
-  - docker build -t orirothschild/multi-worker ./worker #build context
-  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push orirothschild/multi-client
-  - docker push orirothschild/multi-nginx
-  - docker push orirothschild/multi-server
-  - docker push orirothschild/multi-worker
+  - docker build -t stephengrider/multi-client ./client
+  - docker build -t stephengrider/multi-nginx ./nginx
+  - docker build -t stephengrider/multi-server ./server
+  - docker build -t stephengrider/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push stephengrider/multi-client
+  - docker push stephengrider/multi-nginx
+  - docker push stephengrider/multi-server
+  - docker push stephengrider/multi-worker
 
 deploy:
-  edge: true
   provider: elasticbeanstalk
   region: us-west-1
   app: multi-docker
   env: MultiDocker-env
-  bucket_name: elasticbeanstalk-us-west-1-201546747467
+  bucket_name: elasticbeanstalk-us-west-1-306476627547
   bucket_path: docker-multi
   on:
     branch: master
   access_key_id: $AWS_ACCESS_KEY
-  secret_access_key: $AWS_SECRET 
+  secret_access_key: $AWS_SECRET_KEY
