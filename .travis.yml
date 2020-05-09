@@ -12,7 +12,7 @@ after_success:
   - docker build -t orirothschild/multi-client ./client #build context
   - docker build -t orirothschild/multi-nginx ./nginx #builld context
   - docker build -t orirothschild/multi-server ./server #build context
-  - docker build -t orirothschild/multi-worker ./worker #build context
+  - docker build -t orirothschild/multi-worker ./worker #build conttext
   - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push orirothschild/multi-client
   - docker push orirothschild/multi-nginx
