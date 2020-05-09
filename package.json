@@ -1,9 +1,16 @@
 {
-    "dependencies":{
+    "dependencies": {
+        "pg": "^8.0.3",
+        "cors": "2.8.4",
+        "express": "4.16.3",
         "nodemon": "1.18.3",
-        "redis": "2.8.0"
+        "react": "^16.13.1",
+        "react-dom": "^16.13.1",
+        "react-router-dom": "^5.1.2",
+        "redis": "2.8.0",
+        "body-parser": "*"
     },
-    "scripts":{
+    "scripts": {
         "start": "node index.js",
         "dev": "nodemon"
     }
